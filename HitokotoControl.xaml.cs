@@ -29,7 +29,7 @@ namespace HitokotoComponent
                 async o => await LoadHitokotoAsync(),
                 null,
                 0,
-                5000);  // 1200000毫秒=20分钟,有需要可以调整,单位为毫秒,
+                1200000);  // 1200000毫秒=20分钟,有需要可以调整,单位为毫秒,
                         // 1000毫秒=1秒,60000毫秒=1分钟, 
                         // 五分钟是300000毫秒
                         // by: copilot
@@ -54,7 +54,7 @@ namespace HitokotoComponent
         // 这个函数会叫DecodeHitokoto用来替代await _httpClient.GetStringAsync("https://v1.hitokoto.cn/?encode=text");
         // 只负责获取json提取hitokoto字段，和from_who字段，然后返回一个字符串
         // 例如： 不气盛能叫年轻人吗？ ——刘华强
-        // 如果超过十个字，则不显示from_who字段
+        // 如果超过20个字，则不显示from_who字段
         // 有时，from_who会返回null，这时候就不显示from_who字段
 
         // 定义一个列表用于存放自定义本地一言
@@ -84,7 +84,7 @@ namespace HitokotoComponent
                 var json = JsonDocument.Parse(result).RootElement;
                 var hitokoto = json.GetProperty("hitokoto").GetString();
                 var from_who = json.GetProperty("from_who").GetString();
-                if (hitokoto != null && hitokoto.Length > 10)
+                if (hitokoto != null && hitokoto.Length > 20)
                 {
                     return hitokoto;
                 }
